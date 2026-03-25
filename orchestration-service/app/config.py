@@ -8,8 +8,6 @@ load_dotenv()
 DATABASE_URL = "sqlite:///./users.db"
 
 # JWT Settings
-# SECRET_KEY is used to sign tokens — keep it secret!
-# In production, this comes from .env file
 SECRET_KEY = os.getenv("SECRET_KEY", "Super-Secret-Key")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

@@ -2,7 +2,6 @@ import whisper
 from app.config import  MODEL_NAME
 
 # This variable will hold our loaded model
-# We start with None because the model isn't loaded yet
 whisper_model = None
 
 def load_model():
@@ -43,7 +42,6 @@ def transcribe_audio(file_path: str) -> dict:
         raise RuntimeError("Model is not loaded! Call load_model() fist")
     
     # Run the model on the audio file
-    # This is where the magic happens!
     result = whisper_model.transcribe(file_path)
 
     # Return a clean dictionary with just what we need

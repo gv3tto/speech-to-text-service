@@ -10,8 +10,6 @@ from app.database import get_db
 from app.models import User
 
 # --- Password hashing ---
-# bcrypt is a one-way hash: you can hash a password but never "unhash" it
-# To verify, you hash the input again and compare the hashes
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated = "auto")
 
 def hash_password(password: str) -> str:
@@ -23,7 +21,6 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 # --- JWT tokens ---
-# This tells FastAPI: "look for the token in the Authorization header"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 def create_access_token(data: dict) -> str:

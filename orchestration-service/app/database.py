@@ -4,14 +4,12 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from app.config import DATABASE_URL
 
 # Create the database engine
-# SQLite stores everything in a single file (users.db)
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False} #Needed for SQLite + FastAPI
+    connect_args={"check_same_thread": False}
 )
 
-# SessionLocal is a "factory" that creates database sessions
-# Each request gets its own session to avoid conflicts
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 #Base is the parent class for all out database models

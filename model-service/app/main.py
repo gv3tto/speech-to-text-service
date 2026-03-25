@@ -40,9 +40,6 @@ app = FastAPI(
 def healt_check():
     """
     A simple endpoint to chech if the service is running.
-
-    This is common practice in production services.
-    Docker and the other tools use it to know if your service is alive.
     """
 
     return{"status": "healthy", "service": "model-service"}
@@ -93,7 +90,7 @@ async def transcribe(audio: UploadFile = File(...)):
         temp_file = tempfile.NamedTemporaryFile(
             delete=False,
             suffix=suffix,
-            dir="."  # Save in current directory (avoids Windows path issues)
+            dir="."
         )
         temp_path = temp_file.name  # Save the path BEFORE closing
         
