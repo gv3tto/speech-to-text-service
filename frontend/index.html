@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech to Text Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Header --- */
+        .header {
+            width: 100%;
+            background: #fff;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .header .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .btn-logout {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .btn-logout:hover {
+            background: #f0f0f0;
+        }
+
+        /* --- Main container --- */
+        .container {
+            width: 100%;
+            max-width: 520px;
+            padding: 40px 20px;
+        }
+
+        /* --- Card --- */
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            padding: 32px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card p.subtitle {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+        /* --- Forms --- */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #4a90d9;
+        }
+
+        /* --- Buttons --- */
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-primary:disabled {
+            background: #93b4f5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e5e5;
+        }
+
+        /* --- File upload area --- */
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 32px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #4a90d9;
+            background: #f8fbff;
+        }
+
+        .upload-area.has-file {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .upload-area .icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .upload-area .text {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .upload-area .filename {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-top: 8px;
+        }
+
+        /* --- Result box --- */
+        .result-box {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-box .result-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .result-box .result-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        .result-box .result-meta {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        /* --- Messages --- */
+        .message {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .message-error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        .message-success {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        /* --- Loading spinner --- */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- Hide/show --- */
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Transcription history --- */
+        .history-item {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 10px;
+        }
+
+        .history-item .history-filename {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .history-item .history-text {
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== HEADER ==================== -->
+    <div class="header">
+        <h1>Speech to Text</h1>
+        <div class="user-info hidden" id="user-info">
+            <span id="username-display"></span>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- ==================== AUTH SCREEN ==================== -->
+        <div id="auth-screen">
+            <div class="card">
+                <h2>Welcome</h2>
+                <p class="subtitle">Login or create an account to get started</p>
+
+                <div id="auth-message"></div>
+
+                <div class="form-group">
+                    <label for="auth-username">Username</label>
+                    <input type="text" id="auth-username" placeholder="Enter your username">
+                </div>
+
+                <div class="form-group">
+                    <label for="auth-password">Password</label>
+                    <input type="password" id="auth-password" placeholder="Enter your password">
+                </div>
+
+                <div class="btn-row">
+                    <button class="btn btn-primary" onclick="login()">Login</button>
+                    <button class="btn btn-secondary" onclick="register()">Register</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== MAIN SCREEN ==================== -->
+        <div id="main-screen" class="hidden">
+            <div class="card">
+                <h2>Transcribe Audio</h2>
+                <p class="subtitle">Upload an audio file to convert speech to text</p>
+
+                <div id="main-message"></div>
+
+                <!-- File upload area -->
+                <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()">
+                    <div class="icon">🎤</div>
+                    <div class="text">Click to select an audio file</div>
+                    <div class="text" style="font-size: 12px; margin-top: 4px;">MP3, WAV, OGG, FLAC, M4A</div>
+                    <div class="filename hidden" id="file-name"></div>
+                </div>
+                <input type="file" id="file-input" accept="audio/*" class="hidden" onchange="handleFileSelect(this)">
+
+                <button class="btn btn-primary" style="width: 100%;" id="transcribe-btn" onclick="transcribe()" disabled>
+                    Transcribe
+                </button>
+
+                <!-- Result -->
+                <div class="result-box hidden" id="result-box">
+                    <div class="result-label">Transcription</div>
+                    <div class="result-text" id="result-text"></div>
+                    <div class="result-meta" id="result-meta"></div>
+                </div>
+            </div>
+
+            <!-- History -->
+            <div id="history-section" class="hidden">
+                <h3 style="font-size: 14px; color: #888; margin-bottom: 10px;">Previous transcriptions</h3>
+                <div id="history-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===========================================
+        // CONFIGURATION
+        // ===========================================
+        // This is the URL of the orchestration service
+        // When running locally: http://localhost:8000
+        // When running with Docker: http://localhost:8000
+        const API_URL = 'http://localhost:8000';
+
+        // ===========================================
+        // STATE
+        // ===========================================
+        let token = localStorage.getItem('token');
+        let username = localStorage.getItem('username');
+        let selectedFile = null;
+        let history = [];
+
+        // Check if user is already logged in
+        if (token) {
+            showMainScreen();
+        }
+
+        // ===========================================
+        // AUTH FUNCTIONS
+        // ===========================================
+
+        async function register() {
+            const usernameInput = document.getElementById('auth-username').value;
+            const password = document.getElementById('auth-password').value;
+
+            if (!usernameInput || !password) {
+                showAuthMessage('Please enter username and password', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: usernameInput, password: password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAuthMessage('Account created! You can now login.', 'success');
+                } else {
+                    showAuthMessage(data.detail || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showAuthMessage('Cannot connect to server. Is it running?', 'error');
+            }
+        }
+
+        async function login() {
+            const usernameInput = document.getElementById('auth-username').value;
+            const password = document.getElementById('auth-password').value;
+
+            if (!usernameInput || !password) {
+                showAuthMessage('Please enter username and password', 'error');
+                return;
+            }
+
+            try {
+                // OAuth2 expects form data, not JSON
+                const formData = new URLSearchParams();
+                formData.append('username', usernameInput);
+                formData.append('password', password);
+
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    token = data.access_token;
+                    username = usernameInput;
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('username', username);
+                    showMainScreen();
+                } else {
+                    showAuthMessage(data.detail || 'Login failed', 'error');
+                }
+            } catch (error) {
+                showAuthMessage('Cannot connect to server. Is it running?', 'error');
+            }
+        }
+
+        function logout() {
+            token = null;
+            username = null;
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            selectedFile = null;
+            history = [];
+            showAuthScreen();
+        }
+
+        // ===========================================
+        // TRANSCRIPTION
+        // ===========================================
+
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            if (file) {
+                selectedFile = file;
+                const uploadArea = document.getElementById('upload-area');
+                const fileName = document.getElementById('file-name');
+
+                uploadArea.classList.add('has-file');
+                fileName.textContent = file.name;
+                fileName.classList.remove('hidden');
+
+                document.getElementById('transcribe-btn').disabled = false;
+            }
+        }
+
+        async function transcribe() {
+            if (!selectedFile || !token) return;
+
+            const btn = document.getElementById('transcribe-btn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Transcribing...';
+            
+            // Hide previous result
+            document.getElementById('result-box').classList.add('hidden');
+            showMainMessage('');
+
+            try {
+                const formData = new FormData();
+                formData.append('audio', selectedFile);
+
+                const response = await fetch(`${API_URL}/transcribe`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Show result
+                    const resultBox = document.getElementById('result-box');
+                    const resultText = document.getElementById('result-text');
+                    const resultMeta = document.getElementById('result-meta');
+
+                    resultText.textContent = data.transcription.result.text;
+                    resultMeta.textContent = `Language: ${data.transcription.result.language} | File: ${data.transcription.filename}`;
+                    resultBox.classList.remove('hidden');
+
+                    // Add to history
+                    history.unshift({
+                        filename: selectedFile.name,
+                        text: data.transcription.result.text
+                    });
+                    renderHistory();
+
+                } else if (response.status === 401) {
+                    showMainMessage('Session expired. Please login again.', 'error');
+                    logout();
+                } else {
+                    showMainMessage(data.detail || 'Transcription failed', 'error');
+                }
+
+            } catch (error) {
+                showMainMessage('Cannot connect to server. Is it running?', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Transcribe';
+            }
+        }
+
+        // ===========================================
+        // UI HELPERS
+        // ===========================================
+
+        function showAuthScreen() {
+            document.getElementById('auth-screen').classList.remove('hidden');
+            document.getElementById('main-screen').classList.add('hidden');
+            document.getElementById('user-info').classList.add('hidden');
+            document.getElementById('auth-username').value = '';
+            document.getElementById('auth-password').value = '';
+            showAuthMessage('');
+        }
+
+        function showMainScreen() {
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('main-screen').classList.remove('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            document.getElementById('username-display').textContent = username;
+        }
+
+        function showAuthMessage(text, type) {
+            const el = document.getElementById('auth-message');
+            if (!text) { el.innerHTML = ''; return; }
+            el.innerHTML = `<div class="message message-${type}">${text}</div>`;
+        }
+
+        function showMainMessage(text, type) {
+            const el = document.getElementById('main-message');
+            if (!text) { el.innerHTML = ''; return; }
+            el.innerHTML = `<div class="message message-${type}">${text}</div>`;
+        }
+
+        function renderHistory() {
+            if (history.length === 0) return;
+
+            const section = document.getElementById('history-section');
+            const list = document.getElementById('history-list');
+            section.classList.remove('hidden');
+
+            list.innerHTML = history.map(item => `
+                <div class="history-item">
+                    <div class="history-filename">${item.filename}</div>
+                    <div class="history-text">${item.text}</div>
+                </div>
+            `).join('');
+        }
+
+        // Allow Enter key to trigger login
+        document.getElementById('auth-password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') login();
+        });
+
+        // Drag and drop support
+        const uploadArea = document.getElementById('upload-area');
+
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#4a90d9';
+            this.style.background = '#f8fbff';
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            if (!selectedFile) {
+                this.style.borderColor = '#ccc';
+                this.style.background = '';
+            }
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('audio/')) {
+                const input = document.getElementById('file-input');
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                input.files = dt.files;
+                handleFileSelect(input);
+            }
+        });
+    </script>
+</body>
+</html>
