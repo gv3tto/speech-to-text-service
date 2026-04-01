@@ -1,5 +1,7 @@
 # Speech-to-Text Microservice
 
+![Tests](https://github.com/gv3tto/speech-to-text-service/actions/workflows/tests.yml/badge.svg)
+
 A full-stack speech-to-text application built with a microservice architecture. Upload audio files and get accurate transcriptions powered by OpenAI's Whisper model.
 
 ## Architecture
@@ -30,6 +32,7 @@ The project follows a microservice pattern with two backend services and a front
 - **Frontend:** HTML, CSS, JavaScript (vanilla)
 - **Containerization:** Docker, Docker Compose
 - **Web Server:** Nginx (frontend), Uvicorn (backend)
+- **Testing:** pytest (API tests), Playwright (E2E browser tests)
 
 ## Getting Started
 
@@ -85,6 +88,48 @@ Open `frontend/index.html` in your browser.
 
 > **Note:** Running locally requires Python 3.12+, FFmpeg, and sufficient disk space for the Whisper model (~75MB for tiny).
 
+## Testing
+
+The project includes two levels of testing:
+
+### API Tests (pytest)
+
+Unit and integration tests for the orchestration service covering authentication, authorization, input validation, and health checks.
+
+```bash
+cd orchestration-service
+venv\Scripts\activate
+python -m pytest tests/ -v
+```
+
+**What's tested:**
+- User registration (success, duplicate username, missing fields)
+- Login (success, wrong password, nonexistent user, token validity)
+- Protected endpoint access (no token, invalid token, malformed header)
+- Transcription input validation (missing file, auth enforcement)
+- Health check endpoint
+
+### E2E Browser Tests (Playwright)
+
+End-to-end tests that automate a real browser to test the complete user journey through the frontend.
+
+```bash
+cd e2e-tests
+venv\Scripts\activate
+python -m pytest test_user_journey.py -v
+```
+
+> **Note:** All three services must be running before executing E2E tests.
+
+**What's tested:**
+- Page loads correctly with login form visible
+- User registration flow (success and duplicate handling)
+- Login flow (success, wrong password, empty fields)
+- Username appears in header after login
+- Logout returns to auth screen
+- File upload enables the transcribe button
+- Upload area and transcribe button visibility
+
 ## API Endpoints
 
 ### Authentication
@@ -130,12 +175,20 @@ speech-to-text-service/
 │   │       ├── __init__.py
 │   │       ├── auth.py      # Register & login endpoints
 │   │       └── transcribe.py # Protected transcription endpoint
+│   ├── tests/
+│   │   ├── conftest.py      # Test fixtures & test database setup
+│   │   ├── test_auth.py     # Authentication & authorization tests
+│   │   └── test_transcribe.py # Transcription endpoint tests
 │   ├── Dockerfile
 │   └── requirements.txt
 │
 ├── frontend/
 │   ├── index.html           # Single-page application
 │   └── Dockerfile
+│
+├── e2e-tests/
+│   ├── conftest.py          # Playwright browser fixtures
+│   └── test_user_journey.py # Full user journey E2E tests
 │
 ├── docker-compose.yml        # Orchestrates all services
 ├── .gitignore
@@ -157,18 +210,3 @@ The Whisper model size can be changed in `model-service/app/config.py`:
 ## Supported Audio Formats
 
 MP3, WAV, OGG, FLAC, WebM, M4A
-
-## What I Learned
-
-This project was my first full-stack application. Key concepts I practiced:
-
-- **Microservice Architecture** — Separating ML inference from business logic for independent scaling
-- **REST API Design** — Building clean endpoints with FastAPI
-- **Authentication** — Implementing JWT-based auth with secure password hashing (bcrypt)
-- **Docker** — Containerizing services and orchestrating them with Docker Compose
-- **Inter-service Communication** — Services talking to each other over HTTP
-- **ML in Production** — Loading and serving an ML model behind an API
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
