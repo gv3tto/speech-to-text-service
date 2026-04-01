@@ -42,7 +42,7 @@ The project follows a microservice pattern with two backend services and a front
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/speech-to-text-service.git
+   git clone https://github.com/gv3tto/speech-to-text-service.git
    cd speech-to-text-service
    ```
 
