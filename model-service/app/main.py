@@ -37,12 +37,12 @@ app = FastAPI(
 
 # --- Health check endpoint ---
 @app.get("/health")
-def healt_check():
+def health_check():
     """
-    A simple endpoint to chech if the service is running.
+    A simple endpoint to check if the service is running.
     """
 
-    return{"status": "healthy", "service": "model-service"}
+    return {"status": "healthy", "service": "model-service"}
 
 # --- The main transcription endpoint ---
 @app.post("/transcribe")
@@ -83,6 +83,7 @@ async def transcribe(audio: UploadFile = File(...)):
     # Save the uploaded file to a temporary location
     # We use 'tempfile' so the OS picks a safe location
     temp_file = None
+    temp_path = None
     try:
         suffix = os.path.splitext(audio.filename)[1] or ".wav"
         
@@ -114,5 +115,5 @@ async def transcribe(audio: UploadFile = File(...)):
         )
     
     finally:
-        if temp_file and os.path.exists(temp_path):
+        if temp_path and os.path.exists(temp_path):
             os.remove(temp_path)

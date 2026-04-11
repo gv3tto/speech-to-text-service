@@ -1,0 +1,173 @@
+2026-04-10 11:40:42 | INFO     | main | Orchestration service started
+2026-04-10 11:51:03 | INFO     | main | Orchestration service started
+2026-04-10 11:53:25 | INFO     | main | Orchestration service started
+2026-04-10 12:02:52 | INFO     | main | Orchestration service started
+2026-04-10 12:04:31 | INFO     | main | Orchestration service started
+2026-04-10 12:11:19 | INFO     | main | Orchestration service started
+2026-04-10 12:11:39 | INFO     | main | Orchestration service started
+2026-04-10 12:12:27 | WARNING  | auth | Failed login attempt for: testuser
+2026-04-10 12:12:37 | WARNING  | auth | Failed login attempt for: testuser
+2026-04-10 12:12:43 | WARNING  | auth | Failed login attempt for: testuser
+2026-04-10 12:12:50 | WARNING  | auth | Failed login attempt for: testuser
+2026-04-10 12:12:55 | WARNING  | auth | Failed login attempt for: testuser
+2026-04-10 12:13:11 | WARNING  | auth | Failed login attempt for: testuser34
+2026-04-10 12:13:17 | INFO     | auth | New user registered: testuser34
+2026-04-10 12:13:23 | INFO     | auth | User logged in: testuser34
+2026-04-10 12:13:37 | INFO     | transcribe | Transcription complete: user=testuser34, file=Recording.m4a, language=nn
+2026-04-10 12:14:19 | INFO     | auth | User logged in: testuser34
+2026-04-10 12:14:31 | INFO     | transcribe | Transcription complete: user=testuser34, file=Recording.m4a, language=nn
+2026-04-10 12:18:33 | INFO     | main | Orchestration service started
+2026-04-10 12:19:27 | INFO     | middleware | -> GET /docs
+2026-04-10 12:19:27 | INFO     | middleware | [OK] GET /docs - 200 (0.00s)
+2026-04-10 12:19:27 | INFO     | middleware | -> GET /openapi.json
+2026-04-10 12:19:27 | INFO     | middleware | [OK] GET /openapi.json - 200 (0.01s)
+2026-04-10 12:19:46 | INFO     | middleware | -> POST /auth/login
+2026-04-10 12:19:46 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 12:19:46 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.19s)
+2026-04-10 13:43:29 | INFO     | main | Orchestration service started
+2026-04-10 13:44:14 | INFO     | middleware | -> GET /docs
+2026-04-10 13:44:14 | INFO     | middleware | [OK] GET /docs - 200 (0.00s)
+2026-04-10 13:44:15 | INFO     | middleware | -> GET /openapi.json
+2026-04-10 13:44:15 | INFO     | middleware | [OK] GET /openapi.json - 200 (0.01s)
+2026-04-10 13:44:27 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:27 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:27 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.18s)
+2026-04-10 13:44:29 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:29 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:29 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:44:29 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:30 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:30 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:44:30 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:30 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:30 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.16s)
+2026-04-10 13:44:30 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:30 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:30 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:44:31 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:31 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:31 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:44:31 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:31 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:31 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:44:31 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:31 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:31 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:44:31 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:32 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:32 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:44:32 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:32 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:32 | CRITICAL | metrics | ALERT [login_attack]: Possible brute force attack: 10 failed logins in 5 minutes - usernames targeted: {'string'}
+2026-04-10 13:44:32 | CRITICAL | metrics | NOTIFICATION: Possible brute force attack: 10 failed logins in 5 minutes - usernames targeted: {'string'}
+2026-04-10 13:44:32 | WARNING  | alerts | Email alerts not configured - skipping email notificatino
+2026-04-10 13:44:32 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.20s)
+2026-04-10 13:44:32 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:44:32 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:44:32 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:46:39 | INFO     | main | Orchestration service started
+2026-04-10 13:46:47 | INFO     | middleware | -> GET /docs
+2026-04-10 13:46:47 | INFO     | middleware | [OK] GET /docs - 200 (0.00s)
+2026-04-10 13:46:47 | INFO     | middleware | -> GET /openapi.json
+2026-04-10 13:46:47 | INFO     | middleware | [OK] GET /openapi.json - 200 (0.01s)
+2026-04-10 13:46:54 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:46:54 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:46:54 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.18s)
+2026-04-10 13:46:59 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:46:59 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:46:59 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:46:59 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:46:59 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:46:59 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:46:59 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:46:59 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:46:59 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:46:59 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:47:00 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:47:00 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:47:00 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:47:00 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:47:00 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:47:00 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:47:00 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:47:00 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:47:00 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:47:01 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:47:01 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:47:01 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:47:01 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:47:01 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:47:01 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:47:01 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:47:01 | CRITICAL | metrics | ALERT [login_attack]: Possible brute force attack: 10 failed logins in 5 minutes - usernames targeted: {'string'}
+2026-04-10 13:47:01 | CRITICAL | metrics | NOTIFICATION: Possible brute force attack: 10 failed logins in 5 minutes - usernames targeted: {'string'}
+2026-04-10 13:47:01 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.18s)
+2026-04-10 13:47:01 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:47:01 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:47:01 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:47:02 | INFO     | alerts | Alert email sent: login_attack
+2026-04-10 13:51:19 | INFO     | main | Orchestration service started
+2026-04-10 13:51:24 | INFO     | middleware | -> GET /docs
+2026-04-10 13:51:24 | INFO     | middleware | [OK] GET /docs - 200 (0.00s)
+2026-04-10 13:51:24 | INFO     | middleware | -> GET /openapi.json
+2026-04-10 13:51:24 | INFO     | middleware | [OK] GET /openapi.json - 200 (0.01s)
+2026-04-10 13:51:30 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:30 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:30 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.19s)
+2026-04-10 13:51:32 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:32 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:32 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:51:32 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:32 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:32 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:51:33 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:33 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:33 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:51:33 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:33 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:33 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:51:33 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:34 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:34 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:51:34 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:34 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:34 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.16s)
+2026-04-10 13:51:34 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:34 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:34 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:51:34 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:35 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:35 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:51:35 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:51:35 | WARNING  | auth | Failed login attempt for: string
+2026-04-10 13:51:35 | CRITICAL | metrics | ALERT [login_attack]: Possible brute force attack: 10 failed logins in 5 minutes - usernames targeted: {'string'}
+2026-04-10 13:51:35 | CRITICAL | metrics | NOTIFICATION: Possible brute force attack: 10 failed logins in 5 minutes - usernames targeted: {'string'}
+2026-04-10 13:51:35 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.18s)
+2026-04-10 13:51:36 | INFO     | alerts | Alert email sent: login_attack
+2026-04-10 13:56:35 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:56:36 | WARNING  | auth | Failed login attempt for: testuser34
+2026-04-10 13:56:36 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.18s)
+2026-04-10 13:56:47 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:56:48 | WARNING  | auth | Failed login attempt for: testuser34
+2026-04-10 13:56:48 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.17s)
+2026-04-10 13:56:58 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:56:59 | WARNING  | auth | Failed login attempt for: testuser
+2026-04-10 13:56:59 | WARNING  | middleware | [WARN] POST /auth/login - 401 (0.18s)
+2026-04-10 13:57:23 | INFO     | middleware | -> POST /auth/register
+2026-04-10 13:57:23 | INFO     | auth | New user registered: pass67
+2026-04-10 13:57:23 | INFO     | middleware | [OK] POST /auth/register - 200 (0.17s)
+2026-04-10 13:57:41 | INFO     | middleware | -> POST /auth/login
+2026-04-10 13:57:42 | INFO     | auth | User logged in: pass67
+2026-04-10 13:57:42 | INFO     | middleware | [OK] POST /auth/login - 200 (0.17s)
+2026-04-10 13:57:55 | INFO     | middleware | -> POST /transcribe
+2026-04-10 13:57:57 | ERROR    | transcribe | Model service unreachable: All connection attempts failed
+2026-04-10 13:57:57 | ERROR    | middleware | [ERROR] POST /transcribe - 503 (2.25s)
+2026-04-10 13:58:11 | INFO     | middleware | -> POST /transcribe
+2026-04-10 13:58:13 | ERROR    | transcribe | Model service unreachable: All connection attempts failed
+2026-04-10 13:58:13 | ERROR    | middleware | [ERROR] POST /transcribe - 503 (2.21s)
+2026-04-10 13:58:15 | INFO     | middleware | -> POST /transcribe
+2026-04-10 13:58:17 | ERROR    | transcribe | Model service unreachable: All connection attempts failed
+2026-04-10 13:58:17 | CRITICAL | metrics | ALERT [model_service_down]: Model service is DOWN - 3 consecutive failures
+2026-04-10 13:58:17 | CRITICAL | metrics | NOTIFICATION: Model service is DOWN - 3 consecutive failures
+2026-04-10 13:58:17 | ERROR    | middleware | [ERROR] POST /transcribe - 503 (2.23s)
+2026-04-10 13:58:18 | INFO     | alerts | Alert email sent: model_service_down

@@ -7,9 +7,11 @@ RUN apt-get update && apt-get install -y ffmpeg && rm -rf /var/lib/apt/lists/*
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy requirements first (Docker caches this layer)
+# Copy requirements first
 COPY requirements.txt .
 RUN pip install --no-cache-dir setuptools && pip install --no-cache-dir -r requirements.txt
+
+RUN python -c "from faster_whisper import WhisperModel; WhisperModel('tiny', device='cpu', compute_type='int8', download_root='./models')"
 
 # Copy the rest of the code
 COPY . .

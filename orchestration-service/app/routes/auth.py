@@ -6,6 +6,10 @@ from pydantic import BaseModel
 from app.database import get_db
 from app.models import User
 from app.auth import hash_password, verify_password, create_access_token
+from app.logger import get_logger
+from app.metrics import metrics
+
+logger = get_logger("auth")
 
 # APIRouter lets us group related endpoints together
 router = APIRouter(prefix="/auth", tags=["Authentication"])
@@ -51,6 +55,8 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
         username=user_data.username,
         hashed_password=hash_password(user_data.password)
     )
+
+    logger.info(f"New user registered: {user_data.username}")
     
     db.add(new_user)
     db.commit()
@@ -78,6 +84,9 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     user = db.query(User).filter(User.username == form_data.username).first()
 
     if not user or not verify_password(form_data.password, user.hashed_password):
+        logger.warning(f"Failed login attempt for: {form_data.username}")
+        metrics.record_failed_login(form_data.username)
+        
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password"
@@ -85,5 +94,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     
     # Create token with the username inside it
     access_token = create_access_token(data={"sub": user.username})
+
+    logger.info(f"User logged in: {form_data.username}")
 
     return Token(access_token=access_token, token_type="bearer")

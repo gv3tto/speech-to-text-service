@@ -4,6 +4,10 @@ from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from app.config import MODEL_SERVICE_URL
 from app.auth import get_current_user
 from app.models import User
+from app.logger import get_logger
+from app.metrics import metrics
+
+logger = get_logger("transcribe")
 
 router = APIRouter(tags=["Transcription"])
 
@@ -41,14 +45,22 @@ async def transcribe(
                 detail=f"Model service error: {response.text}"
             )
         
+        
         # Return the result with user info
         result = response.json()
+        logger.info(
+            f"Transcription complete: user={current_user.username}, "
+            f"file={audio.filename}, language={result['result'].get('language')}"
+        )
+        metrics.record_model_service_success()
         return {
             "user": current_user.username,
             "transcription": result
         }
     
     except httpx.RequestError as e:
+        logger.error(f"Model service unreachable: {str(e)}")
+        metrics.record_model_service_failure()
         raise HTTPException(
             status_code=503,
             detail=f"Could not connect to model service: {str(e)}"
